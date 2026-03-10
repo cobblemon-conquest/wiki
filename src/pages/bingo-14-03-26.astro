@@ -1,0 +1,56 @@
+---
+import '../assets/bingo/bingo.css'
+import Bingo from '../components/bingo/Bingo.astro'
+import type { BingoConfig } from '../components/bingo/bingoEngine'
+import {
+	bingoPattern,
+	donutBigPattern,
+	donutSmallPattern,
+	lHorizontalPattern,
+	lVerticalPattern,
+	plusPattern,
+	squarePattern,
+	xPattern,
+} from '../components/bingo/commonPatterns'
+
+const config: BingoConfig = {
+	patterns: [
+		lHorizontalPattern,
+		lVerticalPattern,
+		donutSmallPattern,
+		xPattern,
+		plusPattern,
+		squarePattern,
+		bingoPattern,
+	],
+	goals: [
+	{ name: "Tipo bicho", icon: "🐛" },
+	{ name: "Generación I", icon: "1️⃣" },
+	{ name: "Generación V", icon: "5️⃣" },
+	{ name: "Tipo tierra", icon: "🌍" },
+	{ name: "Tipo normal", icon: "⚪" },
+	{ name: "Pokémon hembra", icon: "♀️" },
+	{ name: "Tipo veneno", icon: "☠️" },
+	{ name: "Generación VI", icon: "6️⃣" },
+	{ name: "Pokémon macho", icon: "♂️" },
+	{ name: "Tipo volador", icon: "🕊️" },
+	{ name: "Pokémon con 4 patas", icon: "🐾" },
+	{ name: "Tipo agua", icon: "💧" },
+	{ name: "Pokémon sin género", icon: "🚫" },
+	{ name: "Pokémon pez", icon: "🐟" },
+	{ name: "Pokémon sin piernas", icon: "🐍" },
+	{ name: "Generación II", icon: "2️⃣" },
+	{ name: "Tipo fuego", icon: "🔥" },
+	{ name: "Tipo planta", icon: "🌿" },
+	{ name: "Tipo eléctrico", icon: "⚡" },
+	{ name: "Generación VII", icon: "7️⃣" },
+	{ name: "Generación IV", icon: "4️⃣" },
+	{ name: "Pokémon de pie", icon: "🧍" },
+	{ name: "Pokémon sin cola", icon: "❌" },
+	{ name: "Pokémon de 2 cabezas", icon: "👥" },
+	{ name: "Pokémon con cola", icon: "🦎" }
+]
+}
+---
+
+<Bingo title="Bingo 14/03/26" config={config} />

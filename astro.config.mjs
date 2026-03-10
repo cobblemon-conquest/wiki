@@ -8,6 +8,9 @@ const { PUBLIC_GITHUB_REPO, PUBLIC_DISCORD_LINK } = env;
 
 // https://astro.build/config
 export default defineConfig({
+	server: {
+		host: true
+	},
 	site: 'https://cobblemon-conquest.albercl.dev/',
 	env: {
 		schema: {

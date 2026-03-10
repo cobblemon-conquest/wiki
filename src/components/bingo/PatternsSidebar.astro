@@ -1,0 +1,38 @@
+---
+import '../../assets/bingo/sidebar.css'
+import type { BingoPattern } from './bingoEngine'
+
+type Props = {
+    patterns: BingoPattern[]
+    totalCells: number
+}
+
+const { patterns, totalCells } = Astro.props as Props
+---
+
+<aside class="bingo-sidebar bingo-card">
+    <h2>Patrones</h2>
+    <section>
+        <div class="bingo-sidebar-pattern-list">
+            {patterns.map(pattern => (
+                <div class="bingo-sidebar-pattern" data-pattern-id={pattern.id}>
+                    <div class="bingo-sidebar-pattern-preview">
+                        {Array.from({ length: totalCells }, (_, i) => (
+                            <div
+                                class={`bingo-sidebar-pattern-cell ${pattern.preview.includes(i) ? 'pattern-cell-filled' : 'pattern-cell-unfilled'}`}
+                                data-preview-index={i}
+                            ></div>
+                        ))}
+                    </div>
+                    <div class="bingo-sidebar-pattern-text">
+                        <h3>{pattern.name}</h3>
+                        <p class="bingo-sidebar-pattern-status" data-pattern-status>Pendiente</p>
+                    </div>
+                </div>
+            ))}
+        </div>
+    </section>
+    <button type="button" class="bingo-reset-button" data-bingo-reset>
+        Reiniciar
+    </button>
+</aside>
