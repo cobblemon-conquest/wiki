@@ -1,0 +1,16 @@
+---
+import { Image } from 'astro:assets'
+import '../../assets/bingo/header.css'
+import pokeballSvg from '../../assets/bingo/pokeball.svg'
+
+type Props = {
+    title: string
+}
+
+const { title } = Astro.props as Props
+---
+
+<header class="bingo-header bingo-card">
+    <Image src={pokeballSvg} alt="Pokéball" class="bingo-header-pokeball"/>
+    <h1 class="bingo-title">{title}</h1>
+</header>

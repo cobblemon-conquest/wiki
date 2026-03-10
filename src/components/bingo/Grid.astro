@@ -1,0 +1,26 @@
+---
+import '../../assets/bingo/grid.css'
+import type { BingoGoal } from './bingoEngine'
+
+type Props = {
+    goals: BingoGoal[]
+}
+
+const { goals } = Astro.props as Props
+---
+
+<main class="bingo-grid">
+    {goals.map((item, index) => (
+        <button
+            type="button"
+            class="bingo-card-cell bingo-card"
+            data-bingo-cell
+            data-cell-index={index}
+            aria-pressed="false"
+            aria-label={`Marcar ${item.name}`}
+        >
+            <span class="bingo-card-icon">{item.icon}</span>
+            <span class="bingo-card-name">{item.name}</span>
+        </button>
+    ))}
+</main>

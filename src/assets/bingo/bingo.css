@@ -1,0 +1,119 @@
+:root {
+    --bg: #1e1e1e;
+    --bg2: #2a2a2a;
+    --text: #f0f0f0;
+    --text2: #c0c0c0;
+    --accent: #ffcc00;
+    --border: #444444;
+    --pokered: #cc0000;
+
+    font-size: x-large;
+}
+
+@media (min-device-width: 768px) {
+    :root {
+        font-size: small;
+    }
+}
+
+body {
+    display: grid;
+    margin: 0;
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: 'Press Start 2P', monospace;
+    height: 100vh;
+    display: flow-root;
+}
+
+body.bingo-confetti-active {
+    overflow: hidden;
+}
+
+h1 {
+    font-size: 3rem;
+    margin: 0;
+    text-align: left;
+}
+
+h2 {
+    font-size: 1.5rem;
+    margin: 0;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+h3 {
+    margin: 0;
+}
+
+p {
+    margin: 0;
+}
+
+.bingo-card {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04), 0 0 20px rgba(232, 184, 75, 0.08);
+}
+
+.bingo-layout {
+    gap: 20px;
+    padding: 10px;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto 1fr;
+    grid-template-areas:
+        "header"
+        "sidebar"
+        "main"
+    ;
+    min-height: 100%;
+}
+
+@media (min-device-width: 768px) {
+    .bingo-layout {
+        display: grid;
+        gap: 5px;
+        padding: 0;
+        grid-template-columns: 300px 1fr;
+        grid-template-rows: auto 1fr;
+        grid-template-areas:
+            "header header"
+            "sidebar main"
+        ;
+        height: 100%;
+    }
+}
+
+.bingo-confetti-layer {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 999;
+}
+
+.bingo-confetti-piece {
+    position: absolute;
+    left: var(--x);
+    top: -16px;
+    width: var(--size);
+    height: calc(var(--size) * 1.8);
+    border-radius: 2px;
+    background-color: var(--color);
+    opacity: 0.95;
+    transform: translate3d(0, 0, 0) rotate(0deg);
+    animation: bingoConfettiFall var(--duration) cubic-bezier(0.2, 0.55, 0.25, 1) var(--delay) forwards;
+}
+
+@keyframes bingoConfettiFall {
+    0% {
+        transform: translate3d(0, -10px, 0) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translate3d(var(--drift), 80vh, 0) rotate(var(--rotate));
+        opacity: 0;
+    }
+}

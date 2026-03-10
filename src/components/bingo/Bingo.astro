@@ -1,0 +1,257 @@
+---
+import '../../assets/bingo/bingo.css'
+import Grid from './Grid.astro'
+import Header from './Header.astro'
+import PatternsSidebar from './PatternsSidebar.astro'
+import { defaultBingoConfig, type BingoConfig } from './bingoEngine'
+
+type Props = {
+    config?: BingoConfig
+    title?: string
+}
+
+const { config = defaultBingoConfig, title = 'Cobblemon Conquest Bingo' } = Astro.props as Props
+---
+
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&amp;family=Nunito:wght@400;700;900&amp;display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <div class="bingo-layout" data-bingo-root data-bingo-config={JSON.stringify(config)}>
+            <Header title={title} />
+            <PatternsSidebar patterns={config.patterns} totalCells={config.goals.length} />
+            <Grid goals={config.goals} />
+        </div>
+
+        <script>
+            import { createBingoEngine } from './bingoEngine'
+
+            const root = document.querySelector('[data-bingo-root]')
+
+            if (root) {
+                const rawConfig = root.getAttribute('data-bingo-config')
+                const config = rawConfig ? JSON.parse(rawConfig) : null
+
+                if (!config) {
+                    throw new Error('Bingo config not found on root element')
+                }
+
+                const engine = createBingoEngine(config)
+                const cells = Array.from(root.querySelectorAll<HTMLElement>('[data-bingo-cell]'))
+                const patternCards = Array.from(root.querySelectorAll<HTMLElement>('[data-pattern-id]'))
+                const resetButton = root.querySelector<HTMLElement>('[data-bingo-reset]')
+                const patternCompletion = new Map<string, boolean>()
+                let confettiUnlockTimer = 0
+                const storageKey = `bingo-state:${window.location.pathname}`
+                const confettiLayer = document.createElement('div')
+
+                confettiLayer.className = 'bingo-confetti-layer'
+                document.body.appendChild(confettiLayer)
+
+                const launchConfetti = () => {
+                    const colors = ['#ffcc00', '#cc0000', '#4dd0e1', '#7ed957', '#ff7f50', '#ffffff']
+                    const particleCount = 90
+                    const maxAnimationTime = 2800
+
+                    document.body.classList.add('bingo-confetti-active')
+
+                    if (confettiUnlockTimer) {
+                        window.clearTimeout(confettiUnlockTimer)
+                    }
+
+                    confettiUnlockTimer = window.setTimeout(() => {
+                        document.body.classList.remove('bingo-confetti-active')
+                    }, maxAnimationTime)
+
+                    for (let i = 0; i < particleCount; i += 1) {
+                        const particle = document.createElement('span')
+                        const x = Math.random() * 100
+                        const drift = (Math.random() - 0.5) * 240
+                        const rotate = (Math.random() - 0.5) * 720
+                        const size = 6 + Math.random() * 6
+                        const duration = 1300 + Math.random() *1100
+                        const delay = Math.random() * 260
+                        const color = colors[Math.floor(Math.random() * colors.length)]
+
+                        particle.className = 'bingo-confetti-piece'
+                        particle.style.setProperty('--x', `${x}vw`)
+                        particle.style.setProperty('--drift', `${drift}px`)
+                        particle.style.setProperty('--rotate', `${rotate}deg`)
+                        particle.style.setProperty('--size', `${size}px`)
+                        particle.style.setProperty('--duration', `${duration}ms`)
+                        particle.style.setProperty('--delay', `${delay}ms`)
+                        particle.style.setProperty('--color', color)
+
+                        confettiLayer.appendChild(particle)
+
+                        particle.addEventListener('animationend', () => {
+                            particle.remove()
+                        })
+                    }
+                }
+
+                const restartAnimationClass = (element: HTMLElement, className: string) => {
+                    element.classList.remove(className)
+                    void element.offsetWidth
+                    element.classList.add(className)
+                }
+
+                const getSelectedCellIndexes = (): number[] => {
+                    const selected: number[] = []
+
+                    cells.forEach((cell) => {
+                        const index = Number(cell.getAttribute('data-cell-index'))
+
+                        if (engine.isCellSelected(index)) {
+                            selected.push(index)
+                        }
+                    })
+
+                    return selected
+                }
+
+                const saveState = () => {
+                    try {
+                        const selected = getSelectedCellIndexes()
+                        window.localStorage.setItem(storageKey, JSON.stringify({ selected }))
+                    } catch {
+                        // Ignore persistence errors (private mode / blocked storage).
+                    }
+                }
+
+                const restoreState = () => {
+                    try {
+                        const rawState = window.localStorage.getItem(storageKey)
+
+                        if (!rawState) {
+                            return
+                        }
+
+                        const parsed = JSON.parse(rawState) as { selected?: unknown }
+
+                        if (!Array.isArray(parsed.selected)) {
+                            return
+                        }
+
+                        parsed.selected.forEach((value) => {
+                            if (typeof value !== 'number') {
+                                return
+                            }
+
+                            const safeIndex = Math.floor(value)
+
+                            if (safeIndex < 0 || safeIndex >= cells.length) {
+                                return
+                            }
+
+                            if (!engine.isCellSelected(safeIndex)) {
+                                engine.toggleCell(safeIndex)
+                            }
+                        })
+                    } catch {
+                        // Ignore invalid payloads or storage access errors.
+                    }
+                }
+
+                const updateGrid = () => {
+                    cells.forEach((cell) => {
+                        const index = Number(cell.getAttribute('data-cell-index'))
+                        const isSelected = engine.isCellSelected(index)
+
+                        cell.classList.toggle('bingo-card-cell-selected', isSelected)
+                        cell.setAttribute('aria-pressed', String(isSelected))
+                    })
+                }
+
+                const updatePatterns = (withEffects: boolean) => {
+                    patternCards.forEach((patternCard) => {
+                        const patternId = patternCard.getAttribute('data-pattern-id')
+
+                        if (!patternId) {
+                            return
+                        }
+
+                        const progress = engine.getPatternProgress(patternId)
+                        const statusNode = patternCard.querySelector('[data-pattern-status]')
+                        const progressNode = patternCard.querySelector('[data-pattern-progress]')
+
+                        if (statusNode) {
+                            statusNode.textContent = progress.completed ? 'Completado' : 'Pendiente'
+                        }
+
+                        if (progressNode) {
+                            progressNode.textContent = `${progress.completedLines}/${progress.totalLines} combinaciones`
+                        }
+
+                        const wasCompleted = patternCompletion.get(patternId) ?? false
+                        patternCard.classList.toggle('pattern-completed', progress.completed)
+
+                        if (withEffects && progress.completed && !wasCompleted) {
+                            restartAnimationClass(patternCard, 'pattern-completed-burst')
+                            launchConfetti()
+                        }
+
+                        patternCompletion.set(patternId, progress.completed)
+
+                        const previewCells = Array.from(patternCard.querySelectorAll('[data-preview-index]'))
+
+                        previewCells.forEach((previewCell) => {
+                            const index = Number(previewCell.getAttribute('data-preview-index'))
+                            const isSelected = engine.isCellSelected(index)
+
+                            previewCell.classList.toggle('pattern-preview-active', isSelected)
+                        })
+                    })
+                }
+
+                const render = (withEffects = true) => {
+                    updateGrid()
+                    updatePatterns(withEffects)
+                }
+
+                const resetGame = () => {
+                    engine.clearSelection()
+                    patternCompletion.clear()
+
+                    window.clearTimeout(confettiUnlockTimer)
+                    document.body.classList.remove('bingo-confetti-active')
+                    confettiLayer.replaceChildren()
+
+                    try {
+                        window.localStorage.removeItem(storageKey)
+                    } catch {
+                        // Ignore blocked storage errors.
+                    }
+
+                    render(false)
+                }
+
+                cells.forEach((cell) => {
+                    cell.addEventListener('click', () => {
+                        const index = Number(cell.getAttribute('data-cell-index'))
+                        engine.toggleCell(index)
+                        const isSelected = engine.isCellSelected(index)
+
+                        if (isSelected) {
+                            restartAnimationClass(cell, 'bingo-cell-select-pop')
+                        } else {
+                            restartAnimationClass(cell, 'bingo-cell-deselect-pop')
+                        }
+
+                        render()
+                        saveState()
+                    })
+                })
+
+                resetButton?.addEventListener('click', () => {
+                    resetGame()
+                })
+
+                restoreState()
+                render(false)
+            }
+        </script>
+    </body>
+</html>
