@@ -64,7 +64,7 @@ export const plusPattern: BingoPattern = {
     lines: [[2, 7, 10, 11, 12, 13, 14, 17, 22]],
 }
 
-export const squarePattern: BingoPattern = {
+export const smallSquarePattern: BingoPattern = {
     id: 'square',
     name: 'Cuadrado',
     preview: [0, 1, 5, 6],
@@ -73,6 +73,23 @@ export const squarePattern: BingoPattern = {
         [5, 6, 10, 11], [6, 7, 11, 12], [7, 8, 12, 13], [8, 9, 13, 14],
         [10, 11, 15, 16], [11, 12, 16, 17], [12, 13, 17, 18], [13, 14, 18, 19],
         [15, 16, 20, 21], [16, 17, 21, 22], [17, 18, 22, 23], [18, 19, 23, 24],
+    ],
+}
+
+export const mediumSquarePattern: BingoPattern = {
+    id: 'medium-square',
+    name: 'Cuadrado Mediano',
+    preview: [0, 1, 2, 5, 6, 7, 10, 11, 12],
+    lines: [
+        [0, 1, 2, 5, 6, 7, 10, 11, 12],
+        [1, 2, 3, 6, 7, 8, 11, 12, 13],
+        [2, 3, 4, 7, 8, 9, 12, 13, 14],
+        [5, 6, 7, 10, 11, 12, 15, 16, 17],
+        [6, 7, 8, 11, 12, 13, 16, 17, 18],
+        [7, 8, 9, 12, 13, 14, 17, 18, 19],
+        [10, 11, 12, 15, 16, 17, 20, 21, 22],
+        [11, 12, 13, 16, 17, 18, 21, 22, 23],
+        [12, 13, 14, 17, 18, 19, 22, 23, 24],
     ],
 }
 
@@ -90,6 +107,6 @@ export const commonPatterns: BingoPattern[] = [
     donutSmallPattern,
     xPattern,
     plusPattern,
-    squarePattern,
+    smallSquarePattern,
     bingoPattern,
 ]
