@@ -25,7 +25,7 @@ export default defineConfig({
 			title: 'Cobblemon Conquest',
 			favicon: '/favicon.ico',
 			logo: {
-				src: './src/assets/logo.webp',
+				src: '/public/logo.webp',
 				alt: 'Cobblemon Conquest Logo',
 			},
 			defaultLocale: 'root',
