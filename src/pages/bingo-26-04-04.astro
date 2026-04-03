@@ -1,0 +1,56 @@
+---
+import '../assets/bingo/bingo.css'
+import Bingo from '../components/bingo/Bingo.astro'
+import type { BingoConfig } from '../components/bingo/bingoEngine'
+import {
+	bingoPattern,
+	donutBigPattern,
+	donutSmallPattern,
+	lHorizontalPattern,
+	lVerticalPattern,
+	plusPattern,
+	mediumSquarePattern,
+	xPattern,
+} from '../components/bingo/commonPatterns'
+
+const config: BingoConfig = {
+	patterns: [
+		lHorizontalPattern,
+		lVerticalPattern,
+		donutBigPattern,
+		xPattern,
+		plusPattern,
+		mediumSquarePattern,
+		bingoPattern,
+	],
+	goals: [
+	{ name: "Pokemon con 4 patas", icon: "🐾" },
+	{ name: "Tipo fantasma", icon: "👻" },
+	{ name: "Pokemon que flota", icon: "🎈" },
+	{ name: "Tipo psiquico", icon: "🔮" },
+	{ name: "Tipo roca", icon: "🪨" },
+	{ name: "Tipo tierra", icon: "🌍" },
+	{ name: "Generación 8", icon: "8️⃣" },
+	{ name: "Tipo hada", icon: "🧚" },
+	{ name: "Pokemon sin genero", icon: "🚫" },
+	{ name: "Pokemon color morado", icon: "🟣" },
+	{ name: "Pokemon color verde", icon: "🟢" },
+	{ name: "Pokemon sin piernas", icon: "🐍" },
+	{ name: "Pokemon color azul", icon: "🔵" },
+	{ name: "Tipo dragón", icon: "🐉" },
+	{ name: "Pokemon color marrón", icon: "🟤" },
+	{ name: "Tipo hielo", icon: "❄️" },
+	{ name: "Pokemon color rojo", icon: "🔴" },
+	{ name: "Tipo siniestro", icon: "🌑" },
+	{ name: "Generación 9", icon: "9️⃣" },
+	{ name: "Pokemon con 2 cabezas", icon: "👥" },
+	{ name: "Pokemon color rosa", icon: "🌸" },
+	{ name: "Generación 5", icon: "5️⃣" },
+	{ name: "Tipo lucha", icon: "🥊" },
+	{ name: "Tipo acero", icon: "⚙️" },
+	{ name: "Pokemon color amarillo", icon: "🟡" }
+	]
+}
+---
+
+<Bingo title="Bingo 04/04/26" config={config} />
