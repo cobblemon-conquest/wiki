@@ -10,7 +10,7 @@ head:
 
 Esta guía explica cómo unirse a Trello, cómo usar el tablero **Server** y cómo gestionar tarjetas en el flujo de trabajo del equipo.
 
-## 0. Unirse a Trello (Joining)
+## 1. Unirse a Trello (Joining)
 
 Para obtener acceso:
 
