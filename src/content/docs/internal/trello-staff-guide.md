@@ -26,7 +26,7 @@ Una vez aceptes la invitación:
 2. Tendrás acceso al tablero **Server**.
 3. Podrás visualizar tarjetas y columnas según tus permisos.
 
-![Página principal](/src/assets/trello-guide/server-main-page.png)
+![Página principal](../../../assets/trello-guide/server-main-page.png)
 
 ### ¿Qué debes hacer después de entrar?
 
@@ -34,7 +34,7 @@ Una vez aceptes la invitación:
 2. Revisa las columnas del flujo de trabajo.
 3. Identifica las tarjetas asignadas a ti o relacionadas con tu área.
 
-![Tablero 'Server'](/src/assets/trello-guide/server-board.png)
+![Tablero 'Server'](../../../assets/trello-guide/server-board.png)
 
 ## 2. Uso del tablero `Server`
 
@@ -74,11 +74,11 @@ Ejemplos de etiquetas de área:
 
 Si una tarea afecta a más de un área, añade múltiples etiquetas para reflejarlo.
 
-![Tarjeta señalando botón de añadir etiqueta](/src/assets/trello-guide/card-tags.png)
+![Tarjeta señalando botón de añadir etiqueta](../../../assets/trello-guide/card-tags.png)
 
 ### Uso de filtros
 
-![Botón filtros del tablero](/src/assets/trello-guide/board-filters.png)
+![Botón filtros del tablero](../../../assets/trello-guide/board-filters.png)
 
 Los filtros te ayudan a enfocarte en lo importante:
 
@@ -86,7 +86,7 @@ Los filtros te ayudan a enfocarte en lo importante:
 2. Filtra por etiquetas para encontrar tipos de trabajo específicos.
 3. Combina filtros para reducir el ruido visual del tablero.
 
-![Filtros del tablero abiertos](/src/assets/trello-guide/board-filters-open.png)
+![Filtros del tablero abiertos](../../../assets/trello-guide/board-filters-open.png)
 
 ## 3. Gestión de tarjetas (Card management)
 
@@ -96,35 +96,35 @@ Esta sección cubre las acciones principales sobre una tarjeta.
 
 Arrastra y suelta la tarjeta entre columnas para actualizar su estado real en el flujo.
 
-![Cambiar estado tarjeta](/src/assets/trello-guide/card-state.png)
+![Cambiar estado tarjeta](../../../assets/trello-guide/card-state.png)
 
 ### Añadir descripción
 
 Usa la descripción para documentar contexto, alcance, links y criterios de entrega.
 
-![Descripción de tarjeta](/src/assets/trello-guide/card-description.png)
+![Descripción de tarjeta](../../../assets/trello-guide/card-description.png)
 
 ### Añadir tasklists (checklists)
 
 Divide el trabajo en pasos concretos usando checklist para facilitar seguimiento.
 
-![Añadir checklists a tarjeta](/src/assets/trello-guide/card-checklist.png)
+![Añadir checklists a tarjeta](../../../assets/trello-guide/card-checklist.png)
 
 ### Comentarios
 
 Registra avances, bloqueos y decisiones en comentarios para mantener trazabilidad.
 
-![Comentar una tarjeta](/src/assets/trello-guide/card-comments.png)
+![Comentar una tarjeta](../../../assets/trello-guide/card-comments.png)
 
 ### Adjuntar archivos
 
 Sube o enlaza archivos relevantes (capturas, documentos, evidencias técnicas).
 
-![Adjuntar archivos](/src/assets/trello-guide/card-attachments.png)
+![Adjuntar archivos](../../../assets/trello-guide/card-attachments.png)
 
 ### Asignar tarjetas
 
 Asigna a otra persona o a tí mismo para indicar al resto que te estás encargando de la tarea.
 
-![Asignar personas](/src/assets/trello-guide/card-members.png)
+![Asignar personas](../../../assets/trello-guide/card-members.png)
 
